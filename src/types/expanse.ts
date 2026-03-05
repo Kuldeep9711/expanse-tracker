@@ -4,4 +4,5 @@ export interface Expanse {
     category: string;
     date: string;
     note: string;
+    name: string;
 }
