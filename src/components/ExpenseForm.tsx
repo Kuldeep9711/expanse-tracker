@@ -1,7 +1,7 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import { z } from 'zod/v4-mini'
+import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 const expenseSchema = z.object({
@@ -12,7 +12,7 @@ const expenseSchema = z.object({
         message: 'Must be a positive number',
     }),
     category: z.string().min(1, 'Please select a category'),
-    note: z.string().optional();
+    note: z.string().optional(),
 })
 
 type ExpenseFormData = z.infer<typeof expenseSchema>;
@@ -45,6 +45,7 @@ export default function ExpenseForm({onAdd}: ExpenseFormProps) {
                 amount: Number(data.amount),
                 category: data.category,
                 note: data.note || undefined,
+                
             })
             reset();
          }

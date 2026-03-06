@@ -12,7 +12,6 @@ export default function ExpensesPage() {
             amount: 500,
             category: 'Cricket Gear',
             note: 'New bat',
-            date: '',
         })
     }
   return (

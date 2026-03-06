@@ -27,7 +27,7 @@ export function useExpenses() {
         }
     }, [expenses, mounted]);
 
-    const addExpense = (exp: Omit<Expense, 'id'>)  => {
+    const addExpense = (exp: Omit<Expense, 'id' | 'date'>)  => {
         const newExp: Expense = {
             ...exp,
             id: crypto.randomUUID(),
