@@ -5,6 +5,11 @@ import { useExpenses } from "@/src/hooks/useExpenses"
 
 export default function ExpensesPage() {
     const { expenses, addExpense, deleteExpense, mounted } = useExpenses();
+      const [selectedCategory, setSelectedCategory] = useState<string>('');
+
+   const filteredExpenses = selectedCategory
+     ? expenses.filter(exp => exp.category === selectedCategory)
+     : expenses; 
 
     // Example add handler - you'll replace with form
     const handleQuickAdd = () => {

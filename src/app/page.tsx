@@ -3,6 +3,7 @@
 import { useExpenses } from "../hooks/useExpenses"
 import ExpenseForm from "../components/ExpenseForm"
 
+
 export default function ExpensePage() {
    const { expenses, addExpense, deleteExpense, mounted} = useExpenses();
 
