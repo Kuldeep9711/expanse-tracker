@@ -115,8 +115,6 @@ export default function ExpenseForm({onAdd}: ExpenseFormProps) {
     >
      Add Expense 
     </button>
-
-
    </form>
   )
 }

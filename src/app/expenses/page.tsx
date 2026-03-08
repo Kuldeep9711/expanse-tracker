@@ -1,5 +1,49 @@
 'use client'
 
+import ExpenseForm from "@/src/components/ExpenseForm"
+import ExpenseSummary from "@/src/components/ExpenseSummary";
+import { useExpenses } from "@/src/hooks/useExpenses"
+import { useState } from "react";
+
+export default function ExpensesPage()  {
+    const { expenses, addExpense, deleteExpense, mounted} = useExpenses();
+     const [selectedCategory, setSelectedCategory] = useState<string>('');
+
+    const filteredExpenses = selectedCategory
+     ? expenses.filter(exp => exp.category === selectedCategory)
+     : expenses;
+
+
+    // Example add handler - you'll replace with form
+    const handleQuickAdd = () => {
+        addExpense({
+            amount: 500,
+            category: 'Cricket Gear',
+            note: 'New bat',
+        })
+    }
+
+    return (
+        <main className="min-h-screen p-8 bg-gray-50 dark:bg-gray-900">
+           <h1 className="text-4xl font-bold mb-8 text-center">Expense Tracker</h1>
+
+           { /* Form */}
+           <ExpenseForm onAdd={addExpense}/>
+
+           {/* Summary */}
+            <ExpenseSummary expenses={expenses} />
+
+            {/* Filter */}
+            <div className="mb-6">{/* dropdown her */}</div>
+
+            {/* List */}
+            <h2>Expenses...</h2>
+            {filteredExpenses.length === 0 ? (...) : filteredExpenses.map(...)}
+        </main>
+    );
+}
+
+/*
 import { useExpenses } from "@/src/hooks/useExpenses"
 
 
@@ -63,4 +107,4 @@ export default function ExpensesPage() {
         )}
        </main>
   )
-}
+} */
