@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function ExpensesPage()  {
     const { expenses, addExpense, deleteExpense, mounted} = useExpenses();
-     const [selectedCategory, setSelectedCategory] = useState<string>('');
+    
 
     const filteredExpenses = selectedCategory
      ? expenses.filter(exp => exp.category === selectedCategory)
