@@ -6,8 +6,16 @@ import { Expense } from "../types/expense"
 const EXPENSES_KEY = 'my-expenses-v1';
 
 export function useExpenses() {
+    const editExpense = (updated: Expense) => {
+        setExpense(prev => 
+            prev.map(exp => (exp.id === updated.id ? updated : exp))
+        );
+    };
+
     const [expenses, setExpense] = useState<Expense[]>([]);
     const [mounted, setMounted] = useState(false);
+
+
 
     useEffect(() => {
         setMounted(true);
@@ -42,5 +50,11 @@ export function useExpenses() {
 
     // Add editExpense later if you want
 
-    return { expenses, addExpense, deleteExpense, mounted };
+    return { 
+        expenses, 
+        addExpense,
+         deleteExpense, 
+         editExpense, 
+         mounted 
+        };
 }

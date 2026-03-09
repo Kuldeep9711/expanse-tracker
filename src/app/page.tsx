@@ -4,9 +4,10 @@ import { useExpenses } from "../hooks/useExpenses"
 import ExpenseForm from "../components/ExpenseForm"
 import ExpenseSummary from "../components/ExpenseSummary";
 import { useState } from "react";
+import ExpenseItem from "../components/ExpenseItem";
 
 export default function ExpensePage() {
-   const { expenses, addExpense, deleteExpense, mounted} = useExpenses();
+   const { expenses, addExpense, deleteExpense, editExpense, mounted} = useExpenses();
     const [selectedCategory, setSelectedCategory] = useState<string>('');
 
     const filteredExpenses = selectedCategory
@@ -66,7 +67,30 @@ export default function ExpensePage() {
             ) : (
               <div className="space-y-4">
                  {filteredExpenses.map(exp => (
-                  <div
+                    <ExpenseItem 
+                    key={exp.id}
+                    expense={exp}
+                    onDelete={deleteExpense}
+                    onEdit={editExpense}  // Pass the new handler
+                    />        
+                 ))}
+                </div>
+            )}
+            </>
+          ) : (
+            <p className="text-center py-12">Loading your expenses...</p>
+          )}
+        </div>
+        
+      </div>
+
+    </main>
+  )
+}
+  
+
+
+{/* <div
                   key={exp.id}
                   className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
                   >
@@ -87,18 +111,4 @@ export default function ExpensePage() {
                         >
                            Delete 
                         </button>
-                    </div>
-                 ))}
-                </div>
-            )}
-            </>
-          ) : (
-            <p className="text-center py-12">Loading your expenses...</p>
-          )}
-        </div>
-        
-      </div>
-
-    </main>
-  )
-}
+                    </div>   */}
