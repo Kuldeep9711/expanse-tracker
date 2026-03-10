@@ -8,11 +8,11 @@ import ExpenseItem from "../components/ExpenseItem";
 
 export default function ExpensePage() {
    const { expenses, addExpense, deleteExpense, editExpense, mounted} = useExpenses();
-       const [selectedCategory, setSelectedCategory] = useState<string>('');
+   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [sortOption, setSortOption] = useState<'date-desc' | 'date-asc' | 'amount-desc' | 'amount-asc'>('date-desc');
-
+      
      // add filter and sorted list
      const filteredAndSortedExpenses = expenses
      .filter(exp => {
@@ -30,22 +30,18 @@ export default function ExpensePage() {
         return b.date.localeCompare(a.date);  // newest first
       }
       if (sortOption === 'date-asc') {
-        return a.date.localeCompare(b.date)
+        return a.date.localeCompare(b.date)  // oldest first 
       }
       if (sortOption === 'amount-desc') {
-        return b.amount - a.amount;   // highest amount first
+        return b.amount - a.amount;          // highest amount first
       }
       if (sortOption === 'amount-asc') {
-        return a.amount - b.amount;   // lowest first
+        return a.amount - b.amount;         // lowest first
       }
       return 0;
      })
 
 
-/*    const filteredExpenses = selectedCategory
-     ? expenses.filter(exp => exp.category === selectedCategory)
-     : expenses; 
-*/
   return (
     <main className="min-h-screen p-6 md:p-12 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="max-w-3xl mx-auto">

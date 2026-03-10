@@ -87,8 +87,8 @@ export default function ExpenseForm({onAdd}: ExpenseFormProps) {
          <option value="Food">Food</option>
          <option value="Transport">Transport</option>
          <option value="Entertainment">Entertainment</option>
-         <option value="Cricket">Cricket / Sports</option>
-          <option value="Cricket">Shopping</option>
+         <option value="Cricket / Sports">Cricket / Sports</option>
+          <option value="Shopping">Shopping</option>
          <option value="Other">Other</option>
         </select>
         {errors.category && (
