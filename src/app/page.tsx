@@ -8,12 +8,44 @@ import ExpenseItem from "../components/ExpenseItem";
 
 export default function ExpensePage() {
    const { expenses, addExpense, deleteExpense, editExpense, mounted} = useExpenses();
-    const [selectedCategory, setSelectedCategory] = useState<string>('');
+       const [selectedCategory, setSelectedCategory] = useState<string>('');
 
-    const filteredExpenses = selectedCategory
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [sortOption, setSortOption] = useState<'date-desc' | 'date-asc' | 'amount-desc' | 'amount-asc'>('date-desc');
+
+     // add filter and sorted list
+     const filteredAndSortedExpenses = expenses
+     .filter(exp => {
+      const query = searchQuery.toLowerCase().trim();
+      if (!query) return true;
+
+      return (
+        exp.category.toLowerCase().includes(query) ||
+        (exp.note && exp.note.toLowerCase().includes(query))  ||
+        exp.amount.toString().includes(query)
+      )
+     })
+     .sort((a, b) => {
+      if (sortOption === 'date-desc') {
+        return b.date.localeCompare(a.date);  // newest first
+      }
+      if (sortOption === 'date-asc') {
+        return a.date.localeCompare(b.date)
+      }
+      if (sortOption === 'amount-desc') {
+        return b.amount - a.amount;   // highest amount first
+      }
+      if (sortOption === 'amount-asc') {
+        return a.amount - b.amount;   // lowest first
+      }
+      return 0;
+     })
+
+
+/*    const filteredExpenses = selectedCategory
      ? expenses.filter(exp => exp.category === selectedCategory)
      : expenses; 
-
+*/
   return (
     <main className="min-h-screen p-6 md:p-12 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="max-w-3xl mx-auto">
@@ -53,20 +85,51 @@ export default function ExpensePage() {
               <option value="Other">Other</option>
             </select>
           </div>
+
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
+            {/* Search Input */}
+            <div className="flex-1">
+              <label className="block text-sm font-medium mb-2">Search</label>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search by category, note or amount..."
+                className="w-full px-4 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Sort Dropdown */}
+            <div className="w-full md:w-48">
+              <label className="block text-sm font-medium mb-2">Sort By</label>
+                 <select
+                 value={sortOption}
+                 onChange={e => setSortOption(e.target.value as typeof sortOption)}
+                 className="w-full px-4 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                 >
+                  <option className="text-sm" value="date-desc">Date (Newest first)</option>
+                  <option className="text-sm" value="date-asc">Date (Oldest first)</option>
+                  <option className="text-sm" value="amount-desc">Amount (High to Low)</option>
+                  <option className="text-sm" value="amount-asc">Amount (Low to High)</option>
+                 </select>
+            </div>
+          </div>
           
 
           {/* List */}
         <h2 className="text-2xl font-semibold mb-4">
-            Expenses {filteredExpenses.length > 0 && `(${filteredExpenses.length})`}
+            Expenses {filteredAndSortedExpenses.length > 0 && `(${filteredAndSortedExpenses.length})`}
         </h2>
 
-            {filteredExpenses.length === 0 ? (
+            {filteredAndSortedExpenses.length === 0 ? (
               <p className="text-center text-gray-500 dark:text-gray-400 py-12">
-              {selectedCategory ? `No expenses in ${selectedCategory}`: 'No expenses added yet'}
+                 {searchQuery || selectedCategory
+                  ? 'No matching expenses found'
+                : 'No expenses added yet'}
               </p>
             ) : (
               <div className="space-y-4">
-                 {filteredExpenses.map(exp => (
+                 {filteredAndSortedExpenses.map(exp => (
                     <ExpenseItem 
                     key={exp.id}
                     expense={exp}
