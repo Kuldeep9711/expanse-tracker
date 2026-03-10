@@ -18,12 +18,6 @@ export default function ExpenseExportButton({expenses}: ExpenseExportButtonProps
         // Headers
         const headers = ['Date', 'Category', 'Amount (₹)', 'Note'];
 
-      // Escape function to handle commas, quotes, newlines in data
-   /*   const escapeCsvValue = (value: any) => {
-        if (value == null) return '';
-        const str = String(value);
-        if (str.includes(',') || str.includes('"') || str.includes('\n'))
-      } */
 
         // Rows
         const rows = expenses.map(exp => [

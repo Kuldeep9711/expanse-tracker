@@ -8,7 +8,7 @@ import ExpenseItem from "../components/ExpenseItem";
 import ExpenseExportButton from "../components/ExpenseExportButton";
 
 export default function ExpensePage() {
-   const { expenses, addExpense, deleteExpense, editExpense, mounted} = useExpenses();
+   const { expenses, addExpense, deleteExpense, editExpense, loading} = useExpenses();
    const [selectedCategory, setSelectedCategory] = useState<string>('');
 
     const [searchQuery, setSearchQuery] = useState<string>('');
@@ -61,7 +61,7 @@ export default function ExpensePage() {
             Expenses {expenses.length > 0 && `(${expenses.length})`}
           </h2>
 
-          {mounted ? (
+          {loading ? (
              <>
              <ExpenseSummary expenses={expenses}/>
 
