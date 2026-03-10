@@ -15,18 +15,26 @@ export function useExpenses() {
     useEffect(() => {
         const loadExpenses = async () => {
             setLoading(true);
-            const { data, error } = await supabase
+            try {
+                console.log('Starting Supabase query...')
+               const { data, error } = await supabase
               .from('expenses')
               .select('*')
               .order('date', { ascending: false });
 
-              if (error) {
-                console.error('Error loading expenses:', error);
-              } else {
+              console.log('Supabase response:', { data, error });
+
+              if ( error ) throw error;
+
                 setExpenses(data || []);
-              }
+              } catch (err) {
+                console.error('Error loading expenses:', err)
+                alert('Failed to load expenses. Check console & Supabase dashboard.');
+              } finally {
+                
               setLoading(false);
 
+              }
         };
 
         loadExpenses();
@@ -103,4 +111,4 @@ export function useExpenses() {
          editExpense, 
          loading,
         };
-}
+} 
