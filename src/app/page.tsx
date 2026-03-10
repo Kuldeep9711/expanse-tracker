@@ -5,6 +5,7 @@ import ExpenseForm from "../components/ExpenseForm"
 import ExpenseSummary from "../components/ExpenseSummary";
 import { useState } from "react";
 import ExpenseItem from "../components/ExpenseItem";
+import ExpenseExportButton from "../components/ExpenseExportButton";
 
 export default function ExpensePage() {
    const { expenses, addExpense, deleteExpense, editExpense, mounted} = useExpenses();
@@ -109,6 +110,10 @@ export default function ExpensePage() {
                   <option className="text-sm" value="amount-asc">Amount (Low to High)</option>
                  </select>
             </div>
+          </div>
+
+          <div className="flex justify-end mb-6">
+            <ExpenseExportButton expenses={filteredAndSortedExpenses} />
           </div>
           
 
