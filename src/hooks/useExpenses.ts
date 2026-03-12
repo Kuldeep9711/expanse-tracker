@@ -58,8 +58,8 @@ export function useExpenses() {
 
     const addExpense = async (exp: Omit<Expense, 'id' | 'date'>) => {
 
-       const { data: { user }} = await supabase.auth.getUser();
-       console.log("Current user:", user);
+      // const { data: { user }} = await supabase.auth.getUser();
+      // console.log("Current user:", user);
 
         const newExpense: Expense = {
             ...exp,
