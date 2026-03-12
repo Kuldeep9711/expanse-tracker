@@ -57,6 +57,10 @@ export function useExpenses() {
     }, []);
 
     const addExpense = async (exp: Omit<Expense, 'id' | 'date'>) => {
+
+       const { data: { user }} = await supabase.auth.getUser();
+       console.log("Current user:", user);
+
         const newExpense: Expense = {
             ...exp,
             id: crypto.randomUUID(),
@@ -65,7 +69,7 @@ export function useExpenses() {
 
         const { data, error } = await supabase
           .from('expenses')
-          .insert(newExpense)
+          .insert([newExpense])
           .select()
           .single();
 
@@ -78,7 +82,7 @@ export function useExpenses() {
     };
 
     const deleteExpense = async (id: string) => {
-        const { error } = await supabase.from('expense').delete().eq('id', id);
+        const { error } = await supabase.from('expenses').delete().eq('id', id);
         if (error) {
             console.error('Delete error:', error);
         }
