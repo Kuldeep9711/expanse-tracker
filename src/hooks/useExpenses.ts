@@ -69,7 +69,7 @@ export function useExpenses() {
 
         const { data, error } = await supabase
           .from('expenses')
-          .insert([newExpense])
+          .insert(newExpense)
           .select()
           .single();
 
@@ -82,9 +82,18 @@ export function useExpenses() {
     };
 
     const deleteExpense = async (id: string) => {
-        const { error } = await supabase.from('expenses').delete().eq('id', id);
-        if (error) {
-            console.error('Delete error:', error);
+         console.log("Deleting ID:", id);
+
+        const { data, error } = await supabase 
+        .from('expenses')
+        .delete()
+        .eq('id', id)
+        .select();
+        
+        console.log("DELETE RESULT:", data, error);
+
+        if (!error) {
+           setExpenses(prev => prev.filter(e => e.id !== id));
         }
     }
 
